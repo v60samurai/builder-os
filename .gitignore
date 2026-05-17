@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (for anyone using npx degit + their own tooling)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# AI scratch / RAG artifacts
+.claude/scratch/
+ruvector.db
+*.rvf
+*.rvf.lock
+
+# Local env
+.env
+.env.local
+.env.*.local
