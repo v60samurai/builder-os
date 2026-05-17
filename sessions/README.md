@@ -1,6 +1,8 @@
-# Vibe Coding Templates — Usage Guide
+# Sessions: Implementation Playbook
 
 Three documents. One system. Build any product solo with Claude Code.
+
+This folder is the *how-to-ship* half of [Builder OS](../README.md). It assumes you have a filled-out PRD (`prd/`) and brand guide (`brand/`) ready to feed in.
 
 ---
 
@@ -131,5 +133,5 @@ Add: AI cost monitoring — log token usage per user per action.
 
 ## Version
 
-Template v1.0 — built from HustlrAI production docs
-Last updated: {{DATE}}
+Template v1.0, built from HustlrAI production docs.
+Last updated: 2026-05-17
