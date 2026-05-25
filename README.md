@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="./assets/cover.svg" alt="Builder OS" width="100%"/>
+</div>
+
 # Builder OS
 
 > An operating system for shipping products solo with AI.
