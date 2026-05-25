@@ -4,6 +4,13 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-05-25
+
+### Added
+- `skills/brand-guide-visualizer/`: Claude Code skill that turns a `brand-guide.md` into a single-file interactive HTML visualizer. No build step, no framework — opens directly in the browser. The visualizer's layout and visual rhythm are designed from the brand's personality, not a template.
+
+---
+
 ## [0.1.0] - 2026-05-17
 
 First public release.
