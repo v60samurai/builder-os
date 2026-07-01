@@ -21,7 +21,7 @@ These templates have shipped real products. They are opinionated. They tell you 
 | [`brand/`](./brand) | Two brand-guide templates: quick and full | You're choosing *how it looks* |
 | [`sessions/`](./sessions) | A 14-session implementation playbook | You're *building it* |
 | [`postmortem/`](./postmortem) | Postmortem template | You've shipped and need to close the loop |
-| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, running sessions, visualizing brand guides | You're using Claude Code and want these enforced, not just suggested |
+| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, running sessions, visualizing brand guides. This repo root is a Claude Code plugin — `cc --plugin-dir` loads all five. | You're using Claude Code and want these enforced, not just suggested |
 | [`pro/`](./pro) | The full 5-mode pipeline connecting everything above | You want the templates wired together, not used as separate folders |
 | [`examples/`](./examples) | Real filled-out examples from shipped products | You want to see one done |
 

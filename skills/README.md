@@ -2,6 +2,17 @@
 
 Claude Code skills (`SKILL.md` + frontmatter). Each one is plain markdown — read it yourself, or drop the folder into a project's `.claude/skills/` to have Claude Code invoke it automatically.
 
+## Install as a plugin
+
+This repo root is a valid Claude Code plugin (`.claude-plugin/plugin.json`) — the skills above auto-discover, none of the template folders are affected. To use it:
+
+```bash
+git clone https://github.com/v60samurai/builder-os.git
+cc --plugin-dir /path/to/builder-os
+```
+
+That loads all five skills for the current Claude Code session. There's no marketplace listing yet — that would need a separate `marketplace.json`, not something this repo ships today.
+
 | Skill | Drives | Use when |
 |---|---|---|
 | [`prd-writer/`](./prd-writer) | `prd/*.md` | Writing or reviewing a PRD. Originally written by Rohan Shah. |

@@ -1,0 +1,13 @@
+{
+  "name": "builder-os",
+  "version": "0.3.1",
+  "description": "Claude Code skills for the BuilderOS PRD/brand/session pipeline: write and update PRDs, gate them against BuilderOS's confidence-tag discipline, run the 14-session build playbook with checkpoints enforced, and visualize brand guides.",
+  "author": {
+    "name": "Harshit Badiger",
+    "url": "https://github.com/v60samurai"
+  },
+  "homepage": "https://github.com/v60samurai/builder-os",
+  "repository": "https://github.com/v60samurai/builder-os",
+  "license": "MIT",
+  "keywords": ["prd", "product-management", "product-requirements", "templates", "claude-code"]
+}
