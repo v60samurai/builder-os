@@ -4,6 +4,13 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.3.1] - 2026-07-01
+
+### Added
+- `.claude-plugin/plugin.json`: repo root is now a valid Claude Code plugin manifest. `skills/` auto-discovers as-is — no restructuring, no effect on `prd/`, `brand/`, `sessions/`, `discovery/`, `postmortem/`, `pro/`, or `examples/`, since plugin auto-discovery only scans `commands/`, `agents/`, `skills/`, `hooks/` at plugin root. Load with `cc --plugin-dir /path/to/builder-os`. No marketplace listing yet (would need a separate `marketplace.json`).
+
+---
+
 ## [0.3.0] - 2026-07-01
 
 ### Added
