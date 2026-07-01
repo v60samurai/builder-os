@@ -16,9 +16,13 @@ These templates have shipped real products. They are opinionated. They tell you 
 
 | Folder | What it is | Use when |
 |--------|------------|----------|
-| [`prd/`](./prd) | Two PRD templates: lean (15KB) and full (48KB) | You're choosing *what* to build |
+| [`prd/`](./prd) | Three PRD templates: lean, full, and org (DRI/pod/milestones, for PMs inside a team) | You're choosing *what* to build |
+| [`discovery/`](./discovery) | Idea log + discovery brief | You're figuring out *if* it's worth building, before you write the PRD |
 | [`brand/`](./brand) | Two brand-guide templates: quick and full | You're choosing *how it looks* |
 | [`sessions/`](./sessions) | A 14-session implementation playbook | You're *building it* |
+| [`postmortem/`](./postmortem) | Postmortem template | You've shipped and need to close the loop |
+| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, running sessions, visualizing brand guides | You're using Claude Code and want these enforced, not just suggested |
+| [`pro/`](./pro) | The full 5-mode pipeline connecting everything above | You want the templates wired together, not used as separate folders |
 | [`examples/`](./examples) | Real filled-out examples from shipped products | You want to see one done |
 
 ---
@@ -28,6 +32,8 @@ These templates have shipped real products. They are opinionated. They tell you 
 ```
 Cohort submission in 2 weeks ─────→ prd/lean-prd.md + brand/quick-brand-guide.md
 Shipping in 1-3 months ───────────→ prd/full-prd.md + brand/full-brand-guide.md
+PM inside a team/pod, not solo ───→ prd/org-prd.md (see pro/README.md for the full pipeline)
+Not sure this is worth building ──→ discovery/idea-log.md → discovery/discovery-brief.md
 Already have a PRD, want to build → start at sessions/SESSION_PLAYBOOK.md
 Just need design rules ───────────→ brand/ standalone
 Need a worked example to copy ───→ examples/
@@ -46,11 +52,13 @@ cd my-product
 
 Then:
 
-1. Open `prd/lean-prd.md` (or `full-prd.md` for serious projects). Search for `{{` and fill every placeholder. Use the confidence tags (🟢🟡🔵🔴) honestly.
+1. Open `prd/lean-prd.md` (or `full-prd.md` for serious projects, `org-prd.md` if you're a PM inside a team). PRD templates use `[bracket]` placeholders, the session playbook uses `{{double-brace}}` ones — search for whichever the file uses and fill every one. Use the confidence tags (🟢🟡🔵🔴) honestly.
 2. Open `brand/quick-brand-guide.md`. Decide your colors, type, voice. Write down *why* you chose each one.
 3. Open `sessions/SESSION_PLAYBOOK.md`. Follow the sessions in order. Do not skip checkpoints.
 
 A solo builder using this end-to-end ships in roughly 12-16 hours of focused work.
+
+Want the templates wired together instead of used as three separate folders — gates between stages, a discovery step before the PRD, a postmortem after launch? See [`pro/README.md`](./pro/README.md) for the full pipeline.
 
 ---
 
@@ -85,22 +93,25 @@ The result: when you hand these docs to Claude Code (or a teammate), they make t
 
 Templates I'll add next (PRs welcome):
 
-- `discovery/` — pre-PRD research synthesis (interview notes → insights)
 - `voice/` — brand voice corpus + microcopy patterns
 - `adr/` — architecture decision records
-- `postmortem/` — shipping retro template
 - `eval/` — MVP completeness rubric
 - `growth/` — post-launch experiment template
-- `.claude/` — starter `CLAUDE.md`, commands, hooks for Claude Code
 - `.cursorrules` — equivalent guard for Cursor users
 
-See [CHANGELOG.md](./CHANGELOG.md) for what's already shipped.
+`discovery/`, `postmortem/`, and Claude Code skills (`skills/`) shipped in 0.3.0 — see [`pro/README.md`](./pro/README.md) for how they connect. See [CHANGELOG.md](./CHANGELOG.md) for the full history.
 
 ---
 
 ## Contributing
 
 Issues, PRs, and new template ideas are welcome. Read [CONTRIBUTING.md](./CONTRIBUTING.md) first. The voice is opinionated, and PRs that dilute it won't merge.
+
+---
+
+## Credits
+
+`skills/prd-writer/` and `skills/prd-updater/` were originally written by Rohan Shah.
 
 ---
 

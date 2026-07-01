@@ -4,6 +4,22 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-07-01
+
+### Added
+- `prd/org-prd.md`: third PRD template for PMs working inside a team/pod rather than shipping solo — DRI, pod, milestone table, operational checklist, GTM section, changelog and open-questions working section. Same confidence-tag discipline as `lean-prd.md`/`full-prd.md`.
+- `discovery/idea-log.md` and `discovery/discovery-brief.md`: BRAINSTORM and DISCOVER stage artifacts, fulfilling the `discovery/` roadmap item. Discovery brief covers ICP (as a structural condition, not demographics), riskiest assumption + cheapest test, evidence table, and a steelman of the case against building.
+- `postmortem/postmortem-template.md`: LEARN stage artifact, fulfilling the `postmortem/` roadmap item. Forces results against the PRD's original Success Criteria, one lesson written as a rule, and an explicit Iterate/Scale/Retire call.
+- `skills/prd-writer/` and `skills/prd-updater/`: Claude Code skills for writing and updating PRDs, ported in from Rohan Shah's originals. Adjusted to be template-agnostic across all three `prd/` templates.
+- `skills/prd-gate/`: new Claude Code skill. Systematizes `prd-writer`'s own "Reviewing Existing PRDs" checklist into a pass/fail gate — unresolved placeholders, confidence-tag coverage, non-goals present, vague-metric antipatterns, guardrail metric present, open-question hygiene.
+- `skills/session-runner/`: new Claude Code skill. Actively walks `sessions/SESSION_PLAYBOOK.md`, refuses to start a session if the previous done-check isn't fully green, treats Checkpoint A/B as hard stops.
+- `pro/MANIFESTO.md` and `pro/README.md`: "Builder OS Pro" — the 5-mode operating layer (BRAINSTORM → DISCOVER → DEFINE → DELIVER → LEARN) wiring every template and skill above into one pipeline, with real tripwires, a real validation protocol, and real gate definitions (ICP, North Star, Aha Moment). Optional layer — the base quickstart is unchanged.
+
+### Fixed
+- README quickstart said to search for `{{` to find PRD placeholders — the PRD templates actually use `[bracket]` placeholders; only the session playbook uses `{{double-brace}}`. Instructions now name both.
+
+---
+
 ## [0.2.0] - 2026-05-25
 
 ### Added

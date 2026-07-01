@@ -1,13 +1,16 @@
 # PRD Templates
 
-Two templates. Pick one based on stakes and time, not vibes.
+Three templates. Pick one based on stakes, time, and who you answer to — not vibes.
 
 | File | Length | Use when |
 |------|--------|----------|
 | [`lean-prd.md`](./lean-prd.md) | 15KB, ~500 lines | Cohort submission, 1-2 week sprint, internal alignment, MVP scoping |
 | [`full-prd.md`](./full-prd.md) | 48KB, ~1100 lines | Shipping to real users, fundraising context, multi-month build, hiring decisions ride on it |
+| [`org-prd.md`](./org-prd.md) | ~9KB | You're a PM inside a team/pod, not shipping solo — needs a DRI, a milestone table other functions report against, and an operational checklist (legal, localisation, partners) |
 
-## Both templates share
+Solo builder shipping alone: pick lean or full. PM inside a company answering to stakeholders outside your own build: pick org. See [`../pro/README.md`](../pro/README.md) if you want discovery and postmortem wired in around whichever you choose.
+
+## All three templates share
 
 - **Confidence tags**: 🟢 (primary research), 🟡 (secondary), 🔵 (hypothesis), 🔴 (disproven). Force yourself to mark every claim.
 - **Discovery before solution**: problem tension, evidence, "say-do gap," competitive landscape come *before* features.
