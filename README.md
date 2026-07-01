@@ -62,6 +62,29 @@ Want the templates wired together instead of used as three separate folders — 
 
 ---
 
+## Install as a Claude Code plugin (optional)
+
+The templates above work with any editor — copy the markdown, fill it in. If you use Claude Code and want the skills enforced instead of just followed:
+
+```bash
+git clone https://github.com/v60samurai/builder-os.git
+cc --plugin-dir /path/to/builder-os
+```
+
+That loads all five skills in [`skills/`](./skills) for the session. Each one is directly invokable by name, or triggers automatically when the context matches:
+
+| Command | Does |
+|---|---|
+| `/prd-writer` | Write or review a PRD |
+| `/prd-updater` | Integrate new information into an existing PRD without bolting on an "update note" |
+| `/prd-gate` | Check whether a PRD is actually ready — placeholders, confidence tags, non-goals, guardrail metric |
+| `/session-runner` | Run the 14-session build playbook with done-checks and checkpoints enforced |
+| `/brand-guide-visualizer` | Turn a filled-out brand guide into a single-file HTML reference |
+
+No marketplace listing yet, so `/plugin marketplace add` won't find it — `--plugin-dir` against a local clone is the way to load it today.
+
+---
+
 ## Philosophy
 
 Most templates are slop.
@@ -81,7 +104,7 @@ The result: when you hand these docs to Claude Code (or a teammate), they make t
 
 ## What this is NOT
 
-- A framework. There's nothing to install.
+- A framework you're locked into. The templates are plain markdown — copy, fill in, done. The Claude Code plugin is opt-in on top of that, not a requirement.
 - A SaaS. No login, no pricing, no roadmap dictated by a Stripe dashboard.
 - A starter kit. No code. Bring your own stack.
 - Beginner-friendly. Assumes you've shipped at least once and know what a PRD is for.
