@@ -4,6 +4,20 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-07-07
+
+### Added
+- `erd/` — the Engineering Requirement Document. `erd/erd-template.md` bridges a locked PRD to code: the ⭐ one structural decision (reviewed first), schema, API contract, backend/frontend change list, net-new logic contract, and a chunk map with boundary contracts. Two modes: greenfield (schema derived from fixtures) and extends-existing (mirror a pattern-source feature in an existing repo). `erd/README.md` explains where it sits.
+- `skills/erd-writer/` and `skills/erd-gate/` — write the ERD from a PRD, and gate it (⭐ decision resolved, no load-bearing hypothesis, boundary contracts complete) before any code. The engineering half of the DEFINE→DELIVER gate.
+- `pro/MANIFESTO.md`: ERD gate (DEFINE→DELIVER), a "build your own X / new infra" anti-invent tripwire, an architectural-🔵 clause, and a build-classification gate definition (greenfield/extends-existing × customer-facing/internal).
+
+### Changed
+- **PRD consolidated to one template.** `prd/prd.md` (formerly `org-prd-v2`) is now the single PRD — discovery rigor folded into the operational spine, phase-split, ERD-aware. `lean-prd`, `full-prd`, and `org-prd` moved to `prd/archive/`. Scale down for small bets by cutting optional sections rather than switching templates.
+- **`sessions/` is now mode-aware.** The playbook branches on the build classification: greenfield runs the full linear arc; extends-existing skips scaffold/landing/auth-setup and builds chunk-by-chunk against the ERD in an existing repo. Adversarial audits (resilience + functional coverage) added as gates before launch; the concrete ship-checklist (auth/billing/PWA/launch/failure-modes) preserved; stack references reframed as examples, not law.
+- PRD gate + writer + updater, `pro/README.md`, root `README.md`, discovery briefs, and `examples/README.md` updated to reference the single PRD + the ERD stage.
+
+---
+
 ## [0.3.1] - 2026-07-01
 
 ### Added

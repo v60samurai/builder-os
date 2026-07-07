@@ -1,11 +1,12 @@
 # Session Playbook: {{PRODUCT_NAME}}
 
-> The only document you follow linearly. Everything else is reference.
+> The mode-aware build playbook. One playbook, two entry arcs (greenfield / extends-existing), a shared back half. Everything else is reference.
 > 
 > IG = Implementation Guide
 > FP = Final Push Guide  
 > BG = Brand Guide
 > PRD = Product Requirements Doc
+> ERD = Engineering Requirements Doc (`../erd/`) — the chunk map + schema every build session builds against
 > UF = User Flows doc
 
 **Estimated time:** {{X}} hours solo with Claude Code
@@ -28,7 +29,94 @@ Each session has one goal. Do not start a session until the previous one's done-
 
 ---
 
-## Pre-Flight (Before Session 1)
+## Before You Start
+
+### Stack is an example, not law
+
+This playbook is written against one concrete stack so the prompts are copy-pasteable: a hosted Postgres + auth provider (example: Supabase), a frontend host (example: Vercel), a backend / worker host (example: Railway), a Next.js frontend, and analytics / error-monitoring / email / payments providers (examples: PostHog, Sentry, Resend, Stripe). **The methodology is stack-agnostic — what each session accomplishes and its done-check hold for any equivalent tool.** Swap in your database, your host, your analytics. Where a prompt names a specific tool, read it as "your {{category}} (example: {{tool}})." The specific tools are one illustration; the sessions and gates are the substance.
+
+### Orchestration is optional
+
+Every session here runs manually — you, Claude Code, one prompt at a time. That is the baseline and it has zero dependencies. If you happen to be on a tool that supports agent orchestration and model routing, independent chunks or sessions can be fanned out to parallel agents — but nothing in this playbook requires it, and no session assumes it. The gates and done-checks are the contract; how many agents run them is your call.
+
+---
+
+## Gate: ERD green before any build session (both arcs)
+
+No build session starts — in either arc — until the ERD exists and `/erd-gate` is green. The build sessions build **against** the ERD's chunk map (§8) and schema (§4); they do not re-derive them. If you find yourself inventing a table, an endpoint, or a chunk boundary inside a build prompt, stop: that decision belongs in the ERD (`../erd/`), not in a session. See the anti-invent tripwire in `../pro/MANIFESTO.md`.
+
+**Gate (both arcs):**
+- [ ] ERD exists at `../erd/` with the build classification stamped in its header (greenfield | extends-existing).
+- [ ] `/erd-gate` returns green — the ⭐ ONE structural decision is resolved (not 🔵), no load-bearing 🔵 sits on the critical path, every chunk has explicit boundary contracts, out-of-scope is stated, auth/authz is declared per endpoint.
+- [ ] Every screen / story from the PRD maps to a chunk in the ERD's chunk map.
+
+**Do not start Session 1 (greenfield) or the chunk build (extends-existing) until this is green.**
+
+---
+
+## Two Entry Arcs — pick from the ERD header
+
+The ERD header stamps the build classification. It routes which sessions you run.
+
+**greenfield — a new app.** Run the full linear arc as written below, top to bottom: Pre-Flight scaffold → Session 1 (schema) → … → Session 14 (launch). This is the default body of this playbook.
+
+**extends-existing — a feature inside an existing repo.** The scaffold, base schema, landing page, and auth are already there — do NOT rebuild them. SKIP Pre-Flight, Session 1 (schema-create), Session 2 (landing), and Session 3's auth **setup**. Start from the ERD's chunk map (§8) and build chunk-by-chunk in the existing repo, mirroring each chunk's pattern source, then run the shared back half. See "Extends-Existing Arc" immediately below.
+
+Both arcs share the ERD gate (above) and the back half (audits + launch prep).
+
+| Phase | greenfield | extends-existing |
+|-------|-----------|------------------|
+| Scaffold | Pre-Flight | skip — repo already exists |
+| Gate | ERD gate | ERD gate (shared) |
+| Build | Sessions 1–10, linear | chunk-by-chunk from ERD §8 (E1 → E2) |
+| Mid-build check | Checkpoint A, Checkpoint B | existing test suite green per chunk + after integration |
+| Hardening | Sessions 11–12 (edge cases, delight) | reuse 11–12 only if the feature is customer-facing |
+| Audits (shared) | Sessions 13, 13.5, 13.6 | same three, scoped to the changed surface |
+| Launch (shared) | Session 14 | Session 14 — feature-flag flip / release |
+
+---
+
+## Extends-Existing Arc (feature inside an existing repo)
+
+You are not scaffolding an app. You are adding a feature the ERD has already spec'd as an ordered set of chunks (§8), each mirroring a known-good pattern source. Reuse the repo's infra, domain, and conventions — build only the deltas. Everything Sessions 1–10 build from scratch already exists here; you replace those sessions with E1 and E2, then rejoin the shared back half.
+
+### E1: Chunk-by-chunk build
+
+**Goal:** Every chunk in the ERD's chunk map is built, in dependency order, each on its own branch, each mirroring its pattern source.
+
+For each chunk C1..Cn in ERD §8, in dependency order (a chunk that reads another's tables comes after it):
+
+1. Branch off the integration branch: `git checkout -b feat/{{chunk-name}}`
+2. Read the chunk's **pattern source** in the existing repo — the sibling feature it mirrors 1:1. Cite exact paths. Do not invent new infrastructure the pattern already provides.
+3. Build the chunk's owned tables, endpoints, and logic per its ERD entry. Mirror the sibling's file layout, error handling, and test style.
+4. Respect **boundary contracts**: a chunk reads tables it does not own only through the named owner's documented contract. It never writes another chunk's tables.
+5. Done-check (per chunk — do not start the next chunk until green):
+   - [ ] The chunk's acceptance criteria (ERD §8) are all met.
+   - [ ] Boundary contracts honored — no write to a table this chunk doesn't own; every cross-chunk read goes through the documented contract.
+   - [ ] Mirrors the pattern source — same layering, input validated at the boundary, timeout on every outbound call, parameterized queries only.
+   - [ ] Existing repo test suite still green; new tests cover the chunk's net-new logic (ERD §6).
+6. Commit and open a PR into the integration branch.
+
+**Commit (per chunk):**
+```bash
+git add . && git commit -m "feat({{chunk-name}}): mirror {{pattern-source}}, build owned tables + endpoints"
+```
+
+### E2: Integrate
+
+**Goal:** All chunks wired together in the existing repo, the full feature works end to end, nothing pre-existing regressed.
+
+**Done when:**
+- [ ] All chunk branches merged to the integration branch.
+- [ ] The full user journey for the feature works end to end (drive it in the running app — don't assume).
+- [ ] The existing app's regression suite is green — the feature broke no sibling.
+- [ ] Net-new logic (ERD §6) matches the spec rule-by-rule.
+
+**Then run the shared back half:** Session 13 (Analytics Audit), Session 13.5 (Resilience Audit), Session 13.6 (Functional-Coverage Audit), Session 14 (Launch Prep) — scoped to the changed surface, not the whole app.
+
+---
+
+## Pre-Flight (greenfield only — Before Session 1)
 
 **Allow 30 minutes.**
 
@@ -138,7 +226,9 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=   # if using payments
 
 ---
 
-## Session 1: Database Schema
+## Session 1: Database Schema (greenfield)
+
+> **extends-existing skips this** — the base schema already exists. Your schema *delta* is specified in ERD §4 and built inside the relevant chunk (E1), never as a from-scratch `schema.sql`.
 
 **Time: 30-45 min**
 
@@ -207,7 +297,9 @@ git add . && git commit -m "feat: database schema, RLS, realtime, auth trigger"
 
 ---
 
-## Session 2: Landing Page
+## Session 2: Landing Page (greenfield)
+
+> **extends-existing skips this** — the app already has its public surface.
 
 **Time: 60-90 min**
 
@@ -280,11 +372,13 @@ Run the verification SQL from Session 1's done-check. Fix any discrepancies. The
 
 ---
 
-## Session 3: Backend Skeleton + Auth
+## Session 3: Backend Skeleton + Auth (greenfield)
+
+> **extends-existing skips the auth *setup* here** — the backend skeleton, auth middleware, and client init already exist. Reuse them from your chunks' pattern source; add only the new endpoints your chunks own (E1).
 
 **Time: 30-45 min**
 
-**Goal:** Backend runs, all routes respond, Supabase client works.
+**Goal:** Backend runs, all routes respond, database + auth client works (example: Supabase).
 
 **Read:** IG → "System Design: Structured Logging, Rate Limiting" + IG → "API Design" + IG → "Environment Variables"
 
@@ -914,6 +1008,87 @@ Then:
 **Commit:**
 ```bash
 git add . && git commit -m "chore: analytics audit, PostHog dashboard, monitoring setup"
+```
+
+---
+
+## Session 13.5: Resilience Audit (Gate)
+
+**Time: 30-45 min**
+
+**Goal:** Try to break every endpoint. The failure points below are closed, not just noted.
+
+This session is adversarial. Do not confirm the happy path — attack it. Walk every endpoint and every state-changing operation and hunt for each failure mode below. A resilience gap is cheap to close now and expensive to page you at 3am for later.
+
+**Read:** IG → "System Design" + "Security" sections. ERD → chunk map + per-endpoint auth/authz declarations.
+
+**Claude Code prompt:**
+```
+Read docs/IMPLEMENTATION_GUIDE.md "System Design" and "Security" sections.
+Read the ERD (../erd/) — the chunk map and the per-endpoint auth/authz declarations.
+
+Audit every endpoint and every state-changing operation adversarially. For each, find and fix:
+
+1. Missing timeouts — every outbound call (DB, external API, AI, email) has a timeout. An unbounded call is a hang waiting for load.
+2. No / naive retries — transient failures retry with backoff + jitter, not a tight loop, and not never.
+3. Missing idempotency — every state-changing op a client could retry (payment, create, webhook delivery) is idempotent (idempotency key or natural dedupe). A double-submit must not double-charge or double-create.
+4. N+1 queries — list endpoints load related data in a batch, not one query per row.
+5. Unvalidated input — every request body and param is validated at the boundary before use.
+6. Hardcoded secrets — no keys or tokens in source. All from env.
+7. Unhandled async / silent failures — no swallowed exceptions, no promise without a catch, no bare except that hides the error.
+8. Missing auth checks — every protected endpoint enforces auth AND authz (the row belongs to the caller), matching the ERD's per-endpoint declaration.
+
+For each finding: state the endpoint, the failure mode, and the fix applied.
+```
+
+**Done when (gate — do not proceed to launch with a red box):**
+- [ ] Every outbound call has a timeout.
+- [ ] State-changing ops that a client can retry are idempotent.
+- [ ] No N+1 on any list endpoint (checked actual query counts, not eyeballed).
+- [ ] Every endpoint validates input at the boundary.
+- [ ] No secret in source (grep the repo).
+- [ ] No silent / swallowed failure on any path.
+- [ ] Every protected endpoint enforces auth + authz per the ERD.
+
+**Commit:**
+```bash
+git add . && git commit -m "fix: resilience audit — timeouts, idempotency, input validation, auth checks"
+```
+
+---
+
+## Session 13.6: Functional-Coverage Audit (Gate)
+
+**Time: 20-30 min**
+
+**Goal:** Every user journey / story in the PRD actually works end to end. Not "the code exists" — the journey completes.
+
+Adversarial in spirit: trace each journey as a skeptical user, not as the author who already knows the happy path.
+
+**Read:** PRD → user stories / journeys. UF → every flow.
+
+**Claude Code prompt:**
+```
+Read docs/PRD.md — the user stories / journeys.
+Read docs/USER_FLOWS.md — every flow.
+
+Build a coverage matrix: one row per PRD user story / journey. For each, trace it end to end in the RUNNING app (drive it — click through, don't read the code and assume) and record:
+- Entry point → each step → terminal success state.
+- Does every step actually work?
+- Empty state, error state, and back-navigation for each step.
+
+Flag any story with no working path, any dead end, and any step that silently does nothing.
+```
+
+**Done when (gate):**
+- [ ] Every PRD user story maps to a journey that completes end to end in the running app.
+- [ ] No dead ends — every step reaches success, a handled error, or a back path.
+- [ ] Every journey's empty and error states verified in the app (not assumed).
+- [ ] Any gap found is either fixed or explicitly logged as out-of-scope with sign-off.
+
+**Commit:**
+```bash
+git add . && git commit -m "test: functional-coverage audit — every PRD journey verified end to end"
 ```
 
 ---

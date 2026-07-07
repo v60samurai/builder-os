@@ -13,4 +13,4 @@ No solutioning here. If you catch yourself designing a feature instead of descri
 
 ## Exit condition
 
-An idea only graduates to `prd/lean-prd.md`, `full-prd.md`, or `org-prd.md` once the discovery brief has a named riskiest assumption with a test plan, a structural (not demographic) ICP, and an honest steelman of the case against building it. See [`../pro/MANIFESTO.md`](../pro/MANIFESTO.md) for the full exit criteria.
+An idea only graduates to `prd/prd.md` once the discovery brief has a named riskiest assumption with a test plan, a structural (not demographic) ICP, and an honest steelman of the case against building it. See [`../pro/MANIFESTO.md`](../pro/MANIFESTO.md) for the full exit criteria.

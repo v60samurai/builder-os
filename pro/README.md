@@ -12,22 +12,22 @@ Read [`MANIFESTO.md`](./MANIFESTO.md) first. Everything below just maps its five
 |---|---|---|---|
 | **BRAINSTORM** | Generate options, no commitment | [`discovery/idea-log.md`](../discovery/idea-log.md) | — |
 | **DISCOVER** | Find the real problem, grade the evidence | [`discovery/discovery-brief.md`](../discovery/discovery-brief.md) | — |
-| **DEFINE** | Commit to what and why, lock scope | [`prd/lean-prd.md`](../prd/lean-prd.md) · [`full-prd.md`](../prd/full-prd.md) · [`org-prd.md`](../prd/org-prd.md) | [`skills/prd-writer`](../skills/prd-writer), [`skills/prd-updater`](../skills/prd-updater), [`skills/prd-gate`](../skills/prd-gate) |
-| **DELIVER** | Build to spec, ship | [`sessions/SESSION_PLAYBOOK.md`](../sessions/SESSION_PLAYBOOK.md), [`brand/`](../brand/) | [`skills/session-runner`](../skills/session-runner), [`skills/brand-guide-visualizer`](../skills/brand-guide-visualizer) |
+| **DEFINE** | Commit to what + why (PRD), then how (ERD); lock scope | [`prd/prd.md`](../prd/prd.md) → [`erd/erd-template.md`](../erd/erd-template.md) | [`prd-writer`](../skills/prd-writer), [`prd-updater`](../skills/prd-updater), [`prd-gate`](../skills/prd-gate), [`erd-writer`](../skills/erd-writer), [`erd-gate`](../skills/erd-gate) |
+| **DELIVER** | Build to spec (against the ERD chunk map), ship | [`sessions/SESSION_PLAYBOOK.md`](../sessions/SESSION_PLAYBOOK.md), [`brand/`](../brand/) | [`skills/session-runner`](../skills/session-runner), [`skills/brand-guide-visualizer`](../skills/brand-guide-visualizer) |
 | **LEARN** | Measure against the North Star, extract the lesson | [`postmortem/postmortem-template.md`](../postmortem/postmortem-template.md) | — |
 
 Move down the table in order. The manifesto's tripwires are what stop you from skipping a row under deadline pressure — read those before you decide a row doesn't apply to you this time.
 
-## Which template, which track
+## One PRD, one ERD, two build modes
 
-The base repo has one track (solo builder, ship in 12-16 hours). Pro adds a second at the DEFINE step, for when you're a PM inside a team rather than shipping alone:
+There's now one PRD template (`prd/prd.md` — scale it down for a small bet by cutting optional sections) and one ERD template. What changes shape is the **build classification**, stamped in the ERD header and carried into DELIVER:
 
 ```
-Solo, shipping alone            → prd/lean-prd.md or full-prd.md → brand/quick or full → sessions/
-PM inside a pod/team            → prd/org-prd.md (DRI, milestones, ops checklist, GTM) → sessions/
+greenfield  (new app)                 → scaffold → schema-from-fixtures → full session arc → ship
+extends-existing (feature in a repo)  → mirror a pattern source → build chunks in place → shared back half → ship
 ```
 
-Both tracks share the same DISCOVER brief, the same `prd-gate` check, and the same session playbook — the only thing that changes shape is the DEFINE artifact, because a solo builder and a pod both need to lock scope, they just answer to different stakeholders while doing it.
+Orthogonally, **customer-facing** surfaces carry more polish + design-system rigor than **internal** tools. Both modes share the same DISCOVER brief, the same PRD + `prd-gate`, the same ERD + `erd-gate`, and the same session playbook — the playbook branches on the mode at its top (see `sessions/`).
 
 ## Skills, if you're using Claude Code
 
@@ -37,6 +37,6 @@ One thing this repo does **not** ship: skills that set the mode itself (a `/brai
 
 ## What Pro is not
 
-- Not a replacement for the base templates — `lean-prd.md` and `full-prd.md` are untouched, still the fastest path for a solo build.
+- Not a replacement for the base templates — `prd/prd.md` alone (skip the ERD/sessions) is still the fastest path for a solo build. The older `lean-prd`/`full-prd`/`org-prd` live in `prd/archive/` if you want the earlier shapes.
 - Not mandatory. Nothing in the main README quickstart requires reading this folder.
 - Not a guarantee. A gate can be gamed by someone determined to game it. What it buys you is that skipping a step takes a deliberate decision, not an accident.

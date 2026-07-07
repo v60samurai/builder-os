@@ -13,7 +13,7 @@ This skill is for **updating existing PRDs**, not writing new ones. If the user 
 
 ## Using inside BuilderOS
 
-Works the same regardless of which template the PRD started from (`lean-prd.md`, `full-prd.md`, or `org-prd.md`) — Step 2 ("map the change to all relevant sections") is what matters, and it applies to any of the three shapes. For a project file source, add one more habit: after applying the edit, re-run the `prd-gate` skill. An update that resolves an open question or adds a new claim can silently break confidence-tag consistency if the tag doesn't land along with the claim.
+Works the same regardless of which template the PRD started from (the current `prd/prd.md`, or an older `archive/` shape) — Step 2 ("map the change to all relevant sections") is what matters, and it applies to any shape. For a project file source, add one more habit: after applying the edit, re-run the `prd-gate` skill. An update that resolves an open question or adds a new claim can silently break confidence-tag consistency if the tag doesn't land along with the claim.
 
 ---
 

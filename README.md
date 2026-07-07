@@ -16,28 +16,31 @@ These templates have shipped real products. They are opinionated. They tell you 
 
 | Folder | What it is | Use when |
 |--------|------------|----------|
-| [`prd/`](./prd) | Three PRD templates: lean, full, and org (DRI/pod/milestones, for PMs inside a team) | You're choosing *what* to build |
+| [`prd/`](./prd) | One PRD template (phase-split; discovery rigor + operational spine). Older lean/full/org kept in `archive/`. | You're deciding *what* to build |
+| [`erd/`](./erd) | The Engineering Requirement Document template — the ⭐ one structural decision, schema, API contract, chunk map + boundary contracts | You're deciding *how* it's built, before code |
 | [`discovery/`](./discovery) | Idea log + discovery brief | You're figuring out *if* it's worth building, before you write the PRD |
 | [`brand/`](./brand) | Two brand-guide templates: quick and full | You're choosing *how it looks* |
-| [`sessions/`](./sessions) | A 14-session implementation playbook | You're *building it* |
+| [`sessions/`](./sessions) | A mode-aware implementation playbook (greenfield + extends-existing), built against the ERD's chunk map | You're *building it* |
 | [`postmortem/`](./postmortem) | Postmortem template | You've shipped and need to close the loop |
-| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, running sessions, visualizing brand guides. This repo root is a Claude Code plugin — `cc --plugin-dir` loads all five. | You're using Claude Code and want these enforced, not just suggested |
+| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, writing/gating the ERD, running sessions, visualizing brand guides. This repo root is a Claude Code plugin. | You're using Claude Code and want these enforced, not just suggested |
 | [`pro/`](./pro) | The full 5-mode pipeline connecting everything above | You want the templates wired together, not used as separate folders |
 | [`examples/`](./examples) | Real filled-out examples from shipped products | You want to see one done |
 
 ---
 
-## Which template, when
+## Where to start
 
 ```
-Cohort submission in 2 weeks ─────→ prd/lean-prd.md + brand/quick-brand-guide.md
-Shipping in 1-3 months ───────────→ prd/full-prd.md + brand/full-brand-guide.md
-PM inside a team/pod, not solo ───→ prd/org-prd.md (see pro/README.md for the full pipeline)
 Not sure this is worth building ──→ discovery/idea-log.md → discovery/discovery-brief.md
-Already have a PRD, want to build → start at sessions/SESSION_PLAYBOOK.md
+Deciding WHAT to build ───────────→ prd/prd.md   (cut optional sections for a small bet)
+Deciding HOW to build it ─────────→ erd/erd-template.md   (pick greenfield or extends-existing)
+Already have PRD + ERD, building ─→ sessions/SESSION_PLAYBOOK.md
 Just need design rules ───────────→ brand/ standalone
 Need a worked example to copy ───→ examples/
+Want it all wired together ───────→ pro/README.md (the 5-mode pipeline)
 ```
+
+The spine: **discovery → PRD (what) → ERD (how) → sessions (build) → postmortem (learn)**, each gated before the next.
 
 ---
 
@@ -52,9 +55,10 @@ cd my-product
 
 Then:
 
-1. Open `prd/lean-prd.md` (or `full-prd.md` for serious projects, `org-prd.md` if you're a PM inside a team). PRD templates use `[bracket]` placeholders, the session playbook uses `{{double-brace}}` ones — search for whichever the file uses and fill every one. Use the confidence tags (🟢🟡🔵🔴) honestly.
-2. Open `brand/quick-brand-guide.md`. Decide your colors, type, voice. Write down *why* you chose each one.
-3. Open `sessions/SESSION_PLAYBOOK.md`. Follow the sessions in order. Do not skip checkpoints.
+1. Open `prd/prd.md`. Fill every `[bracket]` placeholder (the session playbook uses `{{double-brace}}` ones). Use the confidence tags (🟢🟡🔵🔴) honestly. Run `/prd-gate` before moving on.
+2. Open `erd/erd-template.md`. Pick a mode (greenfield / extends-existing), name the ⭐ one structural decision, derive the schema, cut the chunks. Run `/erd-gate` before any code.
+3. Open `brand/quick-brand-guide.md`. Decide your colors, type, voice. Write down *why* you chose each one.
+4. Open `sessions/SESSION_PLAYBOOK.md`. Follow the sessions in order. Do not skip checkpoints.
 
 A solo builder using this end-to-end ships in roughly 12-16 hours of focused work.
 
@@ -78,7 +82,9 @@ That loads all five skills in [`skills/`](./skills) for the session. Each one is
 | `/prd-writer` | Write or review a PRD |
 | `/prd-updater` | Integrate new information into an existing PRD without bolting on an "update note" |
 | `/prd-gate` | Check whether a PRD is actually ready — placeholders, confidence tags, non-goals, guardrail metric |
-| `/session-runner` | Run the 14-session build playbook with done-checks and checkpoints enforced |
+| `/erd-writer` | Write the engineering spec (ERD) from a PRD — schema, API, chunk map. Two modes: greenfield / extends-existing |
+| `/erd-gate` | Check the ERD is safe to build — ⭐ structural decision resolved, no load-bearing hypothesis, boundary contracts complete |
+| `/session-runner` | Run the mode-aware build playbook with done-checks and checkpoints enforced |
 | `/brand-guide-visualizer` | Turn a filled-out brand guide into a single-file HTML reference |
 
 No marketplace listing yet, so `/plugin marketplace add` won't find it — `--plugin-dir` against a local clone is the way to load it today.

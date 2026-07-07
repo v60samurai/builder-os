@@ -1,30 +1,30 @@
-# PRD Templates
+# PRD Template
 
-Three templates. Pick one based on stakes, time, and who you answer to — not vibes.
+One template. Scale it down for small bets by cutting optional sections — don't switch to a different template.
 
-| File | Length | Use when |
-|------|--------|----------|
-| [`lean-prd.md`](./lean-prd.md) | 15KB, ~500 lines | Cohort submission, 1-2 week sprint, internal alignment, MVP scoping |
-| [`full-prd.md`](./full-prd.md) | 48KB, ~1100 lines | Shipping to real users, fundraising context, multi-month build, hiring decisions ride on it |
-| [`org-prd.md`](./org-prd.md) | ~9KB | You're a PM inside a team/pod, not shipping solo — needs a DRI, a milestone table other functions report against, and an operational checklist (legal, localisation, partners) |
+| File | What it is |
+|------|-----------|
+| [`prd.md`](./prd.md) | The BuilderOS PRD. Discovery discipline (evidence, say-do gap, Impact-vs-Effort) up front; kill signals + sample-size rules + guardrails on every metric; a hypotheses table the postmortem grades; non-goals, instrumentation, key-logic edge cases, phasing, and decision-log linkage. Phase-split — Phase 1 = min usable, later phases noted, not spec'd. |
+| [`archive/`](./archive) | Earlier templates (`lean-prd`, `full-prd`, `org-prd`), kept for reference. Superseded by `prd.md` — don't start new work from these. |
 
-Solo builder shipping alone: pick lean or full. PM inside a company answering to stakeholders outside your own build: pick org. See [`../pro/README.md`](../pro/README.md) if you want discovery and postmortem wired in around whichever you choose.
+**Why one:** three templates was a menu you had to arbitrate before writing a line. `prd.md` (formerly `org-prd-v2`) folds the discovery rigor of the old lean/full into the org PRD's operational spine, so a single template covers solo bets and pod work — a small feature just cuts the optional sections (the Moonshot, secondary GTM) rather than reaching for a lighter file.
 
-## All three templates share
+## What the template enforces
 
-- **Confidence tags**: 🟢 (primary research), 🟡 (secondary), 🔵 (hypothesis), 🔴 (disproven). Force yourself to mark every claim.
-- **Discovery before solution**: problem tension, evidence, "say-do gap," competitive landscape come *before* features.
-- **"What we left out and why"**: a section that explicitly names rejected scope. Prevents post-launch "why wasn't X in v1?" regret.
-- **The chain**: P1 → P2 → P3 → failure mode. Forces root-cause thinking, not feature lists.
+- **Confidence tags** — 🟢 primary / 🟡 secondary / 🔵 hypothesis / 🔴 disproven, on every claim. `prd-gate` fails an untagged claim.
+- **Discovery before solution** — problem tension, evidence, say-do gap, why the ecosystem fails, come *before* features.
+- **Non-goals** — explicit rejected scope. Prevents post-launch "why wasn't X in v1?"
+- **Guardrail metric + kill signals** — every metric has a threshold and a response owner, not just a target.
+- **Phase-split** — Phase 1 is the minimum usable set; later phases are named at a high level so the schema/architecture don't block them, not detailed.
 
-## Lean vs Full
+## The chain to build
 
-The lean template compresses every section to its smallest defensible form (1-2 tables, 1-2 paragraphs). Use it when the decision-maker reading it has 20 minutes.
+PRD (this) → [`../erd/`](../erd) (the engineering spec — schema, API, chunk map) → [`../sessions/`](../sessions) (the build playbook). The PRD's phase-split and the ERD's chunk map are what the session playbook builds against.
 
-The full template gives you space for primary research quotes, multiple personas, full competitive matrices, and a roadmap to phase 4+. Use it when you're committing months of build time and the document needs to survive scrutiny.
+## Skills
 
-When in doubt: start with lean. Promote to full only if a section needs more room.
+- [`/prd-writer`](../skills/prd-writer) — write or review the PRD.
+- [`/prd-updater`](../skills/prd-updater) — fold new information into an existing PRD without an "update note."
+- [`/prd-gate`](../skills/prd-gate) — check the PRD is DEFINE-exit-ready before build.
 
-## See it filled out
-
-`examples/` (coming in v0.2.0): the Founders CRM PRD, written in both lean and full forms, so you can read a worked example end-to-end before filling your own.
+See [`../pro/README.md`](../pro/README.md) for the full 5-mode pipeline.

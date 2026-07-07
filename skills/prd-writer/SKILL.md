@@ -11,9 +11,9 @@ This skill creates modern, decision-focused PRDs that work with AI prototyping t
 
 ## Using inside BuilderOS
 
-This skill is template-agnostic — it applies to whichever PRD you're filling in (`prd/lean-prd.md`, `prd/full-prd.md`, or `prd/org-prd.md`), not just its own reference template. Use its philosophy and quality checklist regardless of which template shape you chose; use `references/prd-template.md` only if you're starting without any of the three.
+BuilderOS ships one PRD template — `prd/prd.md` (phase-split; scale down for small bets by cutting optional sections). This skill's philosophy and quality checklist apply to it; `references/prd-template.md` is this skill's own reference shape, kept for standalone use outside BuilderOS.
 
-Before writing, run the `prd-gate` skill against the draft — it checks the things this skill's own "Reviewing Existing PRDs" section describes, systematized into a pass/fail gate.
+After writing, run `prd-gate` against the draft (DEFINE exit). Then the PRD feeds `erd-writer` → `erd/erd-template.md` (the engineering spec) before any build.
 
 ## Core Philosophy
 
