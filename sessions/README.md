@@ -2,7 +2,16 @@
 
 Three documents. One system. Build any product solo with Claude Code.
 
-This folder is the *how-to-ship* half of [Builder OS](../README.md). It assumes you have a filled-out PRD (`prd/`) and brand guide (`brand/`) ready to feed in.
+This folder is the *how-to-ship* half of [Builder OS](../README.md). It assumes you have a filled-out PRD (`prd/`), a green ERD (`../erd/`), and a brand guide (`brand/`) ready to feed in.
+
+The playbook is **mode-aware**: one playbook, two entry arcs sharing a back half.
+
+- **greenfield** — a new app. The full linear arc, ~14 sessions (Pre-Flight scaffold → schema → … → launch).
+- **extends-existing** — a feature inside an existing repo. A shorter arc: skip the scaffold, schema-create, landing, and auth setup; build chunk-by-chunk from the ERD's chunk map instead; then rejoin the shared back half (audits + launch prep).
+
+Which arc you run is stamped in the ERD header (`build classification`). See the "Two Entry Arcs" section at the top of `SESSION_PLAYBOOK.md`.
+
+**Stack is an example, not law.** The prompts name a concrete stack (examples: Supabase, Vercel, Railway, Next.js, PostHog/Sentry/Resend/Stripe) so they're copy-pasteable. The methodology and every done-check are stack-agnostic — swap in your own tools. Orchestration (fanning sessions out to parallel agents) is an optional advanced layer; the playbook has no hard dependency on it.
 
 ---
 
@@ -11,6 +20,7 @@ This folder is the *how-to-ship* half of [Builder OS](../README.md). It assumes 
 | File | What it is |
 |------|-----------|
 | `PRD.md` | What to build, for whom, the core loop, pricing, edge cases |
+| `ERD` (`../erd/`) | The engineering spec: chunk map, schema, boundary contracts, build classification. Must be `/erd-gate`-green before any build session. |
 | `USER_FLOWS.md` + `.jsx` | How users move through every screen (can be wireframes in code) |
 | `BRAND_GUIDE.md` | Colors, typography, tone of voice, animation style, design principles |
 
@@ -53,16 +63,19 @@ Key replacements:
 
 At the project root, create `CLAUDE.md` using the template in the Session Playbook Pre-Flight section. This loads automatically in every Claude Code session.
 
-### Step 4: Follow the Playbook
+### Step 4: Clear the ERD gate, then follow your arc
 
-Run sessions in order. Do not skip checkpoints. The checkpoints exist to catch broken foundations before they become expensive.
+**Before any build session (both arcs):** the ERD must exist and `/erd-gate` must be green. Build sessions build *against* the ERD's chunk map and schema — they don't re-derive them. See "Gate: ERD green before any build session" in `SESSION_PLAYBOOK.md`.
+
+Then run your arc's sessions in order. Do not skip checkpoints or audit gates. The checkpoints exist to catch broken foundations before they become expensive; the audit gates exist to catch resilience and coverage holes before launch.
 
 ---
 
-## Sessions Overview
+## Sessions Overview (greenfield arc)
 
 | Session | What You Build | Time |
 |---------|---------------|------|
+| — | **ERD gate** (both arcs) — `/erd-gate` green before build | — |
 | Pre-Flight | Services, scaffold, CLAUDE.md | 30 min |
 | 1 | Database schema | 30-45 min |
 | 2 | Landing page | 60-90 min |
@@ -80,9 +93,25 @@ Run sessions in order. Do not skip checkpoints. The checkpoints exist to catch b
 | 11 | Edge cases | 30-45 min |
 | 12 | Delight layer | 30-45 min |
 | 13 | Analytics audit | 20-30 min |
+| 🔒 13.5 | Resilience audit (gate) | 30-45 min |
+| 🔒 13.6 | Functional-coverage audit (gate) | 20-30 min |
 | 14 | Launch prep | 30 min |
 
-**Total: ~12-16 hours solo**
+**Total: ~13-17 hours solo**
+
+## Sessions Overview (extends-existing arc)
+
+Shorter — no scaffold, no schema-create, no landing, no auth setup. Shared back half reuses the greenfield audit + launch sessions.
+
+| Session | What You Build | Source |
+|---------|---------------|--------|
+| — | **ERD gate** — `/erd-gate` green before build | shared |
+| E1 | Chunk-by-chunk build (one branch per chunk, mirror the pattern source) | mode-specific |
+| E2 | Integrate + regression-check the existing repo | mode-specific |
+| 13 | Analytics audit | shared |
+| 🔒 13.5 | Resilience audit (gate) | shared |
+| 🔒 13.6 | Functional-coverage audit (gate) | shared |
+| 14 | Launch prep (feature-flag flip / release) | shared |
 
 ---
 

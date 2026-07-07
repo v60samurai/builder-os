@@ -60,6 +60,6 @@ Every plan rests on assumptions. Most are safe to leave untested. Exactly one is
 - [ ] Riskiest assumption named and evidence graded (not left at 🔵 with no plan to test it)
 - [ ] ICP has a structural condition, not just a demographic
 - [ ] Steelman argued honestly, not as a formality
-- [ ] Decision made: promote to PRD (`prd/lean-prd.md`, `prd/full-prd.md`, or `prd/org-prd.md`), keep testing, or kill and log why
+- [ ] Decision made: promote to PRD (`prd/prd.md`), keep testing, or kill and log why
 
 Promoting before these are checked is how teams end up two months into a build discovering the riskiest assumption was never actually tested — just assumed confident because it was written down.
