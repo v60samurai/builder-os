@@ -1,0 +1,7 @@
+{
+  "name": "prd-templates",
+  "private": true,
+  "dependencies": {
+    "docx": "^9.0.0"
+  }
+}
