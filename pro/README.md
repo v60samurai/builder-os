@@ -12,22 +12,22 @@ Read [`MANIFESTO.md`](./MANIFESTO.md) first. Everything below just maps its five
 |---|---|---|---|
 | **BRAINSTORM** | Generate options, no commitment | [`discovery/idea-log.md`](../discovery/idea-log.md) | — |
 | **DISCOVER** | Find the real problem, grade the evidence | [`discovery/discovery-brief.md`](../discovery/discovery-brief.md) | — |
-| **DEFINE** | Commit to what + why (PRD), then how (ERD); lock scope | [`prd/prd.md`](../prd/prd.md) → [`erd/erd-template.md`](../erd/erd-template.md) | [`prd-writer`](../skills/prd-writer), [`prd-updater`](../skills/prd-updater), [`prd-gate`](../skills/prd-gate), [`erd-writer`](../skills/erd-writer), [`erd-gate`](../skills/erd-gate) |
-| **DELIVER** | Build to spec (against the ERD chunk map), ship | [`sessions/SESSION_PLAYBOOK.md`](../sessions/SESSION_PLAYBOOK.md), [`brand/`](../brand/) | [`skills/session-runner`](../skills/session-runner), [`skills/brand-guide-visualizer`](../skills/brand-guide-visualizer) |
+| **DEFINE** | Commit to what + why (PRD), then how (Blueprint); lock scope | [`prd/prd.md`](../prd/prd.md) → [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) | [`prd-writer`](../skills/prd-writer), [`prd-updater`](../skills/prd-updater), [`prd-gate`](../skills/prd-gate), [`blueprint-writer`](../skills/blueprint-writer), [`blueprint-gate`](../skills/blueprint-gate) |
+| **DELIVER** | Build to spec (against the Blueprint chunk map), ship | [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) Part 3, [`brand/`](../brand/) | [`skills/blueprint-runner`](../skills/blueprint-runner), [`skills/brand-guide-visualizer`](../skills/brand-guide-visualizer) |
 | **LEARN** | Measure against the North Star, extract the lesson | [`postmortem/postmortem-template.md`](../postmortem/postmortem-template.md) | — |
 
 Move down the table in order. The manifesto's tripwires are what stop you from skipping a row under deadline pressure — read those before you decide a row doesn't apply to you this time.
 
-## One PRD, one ERD, two build modes
+## One PRD, one Blueprint, two build modes
 
-There's now one PRD template (`prd/prd.md` — scale it down for a small bet by cutting optional sections) and one ERD template. What changes shape is the **build classification**, stamped in the ERD header and carried into DELIVER:
+There's now one PRD template (`prd/prd.md` — scale it down for a small bet by cutting optional sections) and one Blueprint template. What changes shape is the **build classification**, stamped in the Blueprint header and carried into DELIVER:
 
 ```
 greenfield  (new app)                 → scaffold → schema-from-fixtures → full session arc → ship
 extends-existing (feature in a repo)  → mirror a pattern source → build chunks in place → shared back half → ship
 ```
 
-Orthogonally, **customer-facing** surfaces carry more polish + design-system rigor than **internal** tools. Both modes share the same DISCOVER brief, the same PRD + `prd-gate`, the same ERD + `erd-gate`, and the same session playbook — the playbook branches on the mode at its top (see `sessions/`).
+Orthogonally, **customer-facing** surfaces carry more polish + design-system rigor than **internal** tools. Both modes share the same DISCOVER brief, the same PRD + `prd-gate`, the same Blueprint + `blueprint-gate`, and the same Part 3 build plan — Part 3 branches on the mode at its top (see `blueprint/blueprint-template.md`).
 
 ## Skills, if you're using Claude Code
 
@@ -37,6 +37,6 @@ One thing this repo does **not** ship: skills that set the mode itself (a `/brai
 
 ## What Pro is not
 
-- Not a replacement for the base templates — `prd/prd.md` alone (skip the ERD/sessions) is still the fastest path for a solo build. The older `lean-prd`/`full-prd`/`org-prd` live in `prd/archive/` if you want the earlier shapes.
+- Not a replacement for the base templates — `prd/prd.md` alone (skip the Blueprint) is still the fastest path for a solo build. The older `lean-prd`/`full-prd`/`org-prd` live in `prd/archive/` if you want the earlier shapes.
 - Not mandatory. Nothing in the main README quickstart requires reading this folder.
 - Not a guarantee. A gate can be gamed by someone determined to game it. What it buys you is that skipping a step takes a deliberate decision, not an accident.

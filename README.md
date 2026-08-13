@@ -6,7 +6,7 @@
 
 > An operating system for shipping products solo with AI.
 
-PRD → Brand Guide → Session Playbook. The three documents I use to take a product from idea to live URL, working alone with Claude Code.
+PRD → Brand Guide → Blueprint. The three documents I use to take a product from idea to live URL, working alone with Claude Code.
 
 These templates have shipped real products. They are opinionated. They tell you what to do, not what you *could* do.
 
@@ -17,12 +17,12 @@ These templates have shipped real products. They are opinionated. They tell you 
 | Folder | What it is | Use when |
 |--------|------------|----------|
 | [`prd/`](./prd) | One PRD template (phase-split; discovery rigor + operational spine). Older lean/full/org kept in `archive/`. | You're deciding *what* to build |
-| [`erd/`](./erd) | The Engineering Requirement Document template — the ⭐ one structural decision, schema, API contract, chunk map + boundary contracts | You're deciding *how* it's built, before code |
+| [`blueprint/`](./blueprint) | The Blueprint — one doc merging the engineering spec, technical reference, and step-by-step build plan: the ⭐ structural decision, schema, API contracts, chunk map, env + integrations, and the session-by-session sequence to v0 | You're deciding *how* it's built, and building it |
 | [`discovery/`](./discovery) | Idea log + discovery brief | You're figuring out *if* it's worth building, before you write the PRD |
 | [`brand/`](./brand) | Two brand-guide templates: quick and full | You're choosing *how it looks* |
-| [`sessions/`](./sessions) | A mode-aware implementation playbook (greenfield + extends-existing), built against the ERD's chunk map | You're *building it* |
+| [`sessions/`](./sessions) | The go-to-market launch push (`FINAL_PUSH.md`) — the build plan itself now lives in the Blueprint | You're about to ship |
 | [`postmortem/`](./postmortem) | Postmortem template | You've shipped and need to close the loop |
-| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, writing/gating the ERD, running sessions, visualizing brand guides. This repo root is a Claude Code plugin. | You're using Claude Code and want these enforced, not just suggested |
+| [`skills/`](./skills) | Claude Code skills: writing/updating/gating PRDs, writing/gating/running the Blueprint, visualizing brand guides. This repo root is a Claude Code plugin. | You're using Claude Code and want these enforced, not just suggested |
 | [`pro/`](./pro) | The full 5-mode pipeline connecting everything above | You want the templates wired together, not used as separate folders |
 | [`examples/`](./examples) | Real filled-out examples from shipped products | You want to see one done |
 
@@ -33,14 +33,14 @@ These templates have shipped real products. They are opinionated. They tell you 
 ```
 Not sure this is worth building ──→ discovery/idea-log.md → discovery/discovery-brief.md
 Deciding WHAT to build ───────────→ prd/prd.md   (cut optional sections for a small bet)
-Deciding HOW to build it ─────────→ erd/erd-template.md   (pick greenfield or extends-existing)
-Already have PRD + ERD, building ─→ sessions/SESSION_PLAYBOOK.md
+Deciding HOW + building it ───────→ blueprint/blueprint-template.md   (pick greenfield or extends-existing)
+Ready to build ───────────────────→ blueprint/ Part 3, the build sessions
 Just need design rules ───────────→ brand/ standalone
 Need a worked example to copy ───→ examples/
 Want it all wired together ───────→ pro/README.md (the 5-mode pipeline)
 ```
 
-The spine: **discovery → PRD (what) → ERD (how) → sessions (build) → postmortem (learn)**, each gated before the next.
+The spine: **discovery → PRD (what) → Blueprint (how + build) → postmortem (learn)**, each gated before the next.
 
 ---
 
@@ -56,9 +56,9 @@ cd my-product
 Then:
 
 1. Open `prd/prd.md`. Fill every `[bracket]` placeholder (the session playbook uses `{{double-brace}}` ones). Use the confidence tags (🟢🟡🔵🔴) honestly. Run `/prd-gate` before moving on.
-2. Open `erd/erd-template.md`. Pick a mode (greenfield / extends-existing), name the ⭐ one structural decision, derive the schema, cut the chunks. Run `/erd-gate` before any code.
+2. Open `blueprint/blueprint-template.md`. Pick a mode (greenfield / extends-existing), name the ⭐ structural decision, derive the schema, cut the chunks, spec the tech + env, and sequence the build sessions. Run `/blueprint-gate` before any code.
 3. Open `brand/quick-brand-guide.md`. Decide your colors, type, voice. Write down *why* you chose each one.
-4. Open `sessions/SESSION_PLAYBOOK.md`. Follow the sessions in order. Do not skip checkpoints.
+4. Work Part 3 of the Blueprint — the build sessions, in order. Do not skip checkpoints.
 
 A solo builder using this end-to-end ships in roughly 12-16 hours of focused work.
 
@@ -68,26 +68,35 @@ Want the templates wired together instead of used as three separate folders — 
 
 ## Install as a Claude Code plugin (optional)
 
-The templates above work with any editor — copy the markdown, fill it in. If you use Claude Code and want the skills enforced instead of just followed:
+The templates above work with any editor — copy the markdown, fill it in. If you use Claude Code and want the skills enforced instead of just followed, install it as a plugin:
 
 ```bash
-git clone https://github.com/v60samurai/builder-os.git
-cc --plugin-dir /path/to/builder-os
+claude plugin marketplace add v60samurai/builder-os
+claude plugin install builder-os@builder-os
 ```
 
-That loads all five skills in [`skills/`](./skills) for the session. Each one is directly invokable by name, or triggers automatically when the context matches:
+(Or add it through the interactive `/plugin` menu.) That loads all seven skills in [`skills/`](./skills) for every session. Each one is directly invokable by name, or triggers automatically when the context matches:
 
 | Command | Does |
 |---|---|
 | `/prd-writer` | Write or review a PRD |
 | `/prd-updater` | Integrate new information into an existing PRD without bolting on an "update note" |
 | `/prd-gate` | Check whether a PRD is actually ready — placeholders, confidence tags, non-goals, guardrail metric |
-| `/erd-writer` | Write the engineering spec (ERD) from a PRD — schema, API, chunk map. Two modes: greenfield / extends-existing |
-| `/erd-gate` | Check the ERD is safe to build — ⭐ structural decision resolved, no load-bearing hypothesis, boundary contracts complete |
-| `/session-runner` | Run the mode-aware build playbook with done-checks and checkpoints enforced |
+| `/blueprint-writer` | Write the Blueprint from a PRD — spec (schema, API, chunk map) + technical reference (env, integrations, security) + step-by-step build plan. Two modes: greenfield / extends-existing |
+| `/blueprint-gate` | Check the Blueprint is safe to build — ⭐ structural decision resolved, no load-bearing hypothesis, boundary contracts + env complete, every session verifiable |
+| `/blueprint-runner` | Drive the Blueprint's build sessions with done-checks and checkpoints enforced |
 | `/brand-guide-visualizer` | Turn a filled-out brand guide into a single-file HTML reference |
 
-No marketplace listing yet, so `/plugin marketplace add` won't find it — `--plugin-dir` against a local clone is the way to load it today.
+### Updating
+
+Pull the latest skills after a new version ships:
+
+```bash
+claude plugin marketplace update builder-os
+claude plugin update builder-os@builder-os
+```
+
+Restart Claude Code (or start a new session) for the updated skills to load.
 
 ---
 
@@ -102,7 +111,7 @@ Builder OS does the opposite:
 - Every section tells you *why* it exists, what *good* looks like, and what *bad* looks like.
 - Confidence tags (🟢 primary research, 🟡 secondary, 🔵 hypothesis, 🔴 disproven) force you to own how solid each claim is.
 - Brand decisions get defended in writing. If you can't write *why*, the choice isn't made yet.
-- The session playbook has checkpoints. Discovering a broken foundation in session 8 costs 3x what it costs in session 2.
+- The Blueprint's build plan has checkpoints. Discovering a broken foundation in session 8 costs 3x what it costs in session 2.
 
 The result: when you hand these docs to Claude Code (or a teammate), they make the decisions *you* would have made. No defaults. No drift. No slop.
 
@@ -114,7 +123,7 @@ The result: when you hand these docs to Claude Code (or a teammate), they make t
 - A SaaS. No login, no pricing, no roadmap dictated by a Stripe dashboard.
 - A starter kit. No code. Bring your own stack.
 - Beginner-friendly. Assumes you've shipped at least once and know what a PRD is for.
-- Stack-agnostic. The session playbook assumes Next.js + Supabase + FastAPI. Adapt as needed.
+- Stack-agnostic. The Blueprint's build plan assumes Next.js + Supabase + FastAPI. Adapt as needed.
 
 ---
 

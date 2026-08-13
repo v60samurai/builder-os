@@ -21,8 +21,8 @@ A 35-minute live-build demo product whose kill shot is swapping a persona file (
 
 | File | What it shows |
 |------|---------------|
-| [`coach-implementation-guide.md`](./coach-implementation-guide.md) | Filled into `sessions/IMPLEMENTATION_GUIDE.md`. ~706 lines. The technical source of truth: architecture, file layout, env wiring, KV layout, auth gate, deploy order. |
-| [`coach-session-playbook.md`](./coach-session-playbook.md) | Filled into `sessions/SESSION_PLAYBOOK.md`. ~566 lines. The timed, linear build script: 7 sessions, 30 minutes, each with a time budget and done-check. |
+| [`coach-implementation-guide.md`](./coach-implementation-guide.md) | Filled into the Blueprint's Part 2 — Technical Reference (was `sessions/IMPLEMENTATION_GUIDE.md`). ~706 lines. The technical source of truth: architecture, file layout, env wiring, KV layout, auth gate, deploy order. |
+| [`coach-session-playbook.md`](./coach-session-playbook.md) | Filled into the Blueprint's Part 3 — Build Plan (was `sessions/SESSION_PLAYBOOK.md`). ~566 lines. The timed, linear build script: 7 sessions, 30 minutes, each with a time budget and done-check. |
 | [`coach-final-push.md`](./coach-final-push.md) | Filled into `sessions/FINAL_PUSH.md`. ~315 lines. The "Studio Swap" choreography and demo polish for the live audience moment. |
 
 Coach's companion PRD and Brand Guide are not included in this bundle (they live in the Coach project repo). The docs reference them with `_italic placeholders_` where the links would go.
@@ -41,4 +41,4 @@ If you're new to Builder OS, read in this order:
 2. `coach-session-playbook.md` next. See how a real session playbook stays timed and gate-checked.
 3. `coach-implementation-guide.md` and `coach-final-push.md` for the depth.
 
-Then open the actual templates in `prd/`, `brand/`, `sessions/` and fill your own.
+Then open the actual templates in `prd/`, `brand/`, `blueprint/` and fill your own.

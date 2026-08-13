@@ -4,6 +4,22 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-08-13
+
+### Added
+- `blueprint/` — the **Blueprint**, one document that merges the ERD (engineering spec), the Implementation Guide (technical reference), and the Session Playbook (step-by-step build plan) into a single source of truth. `blueprint/blueprint-template.md` holds Part 1 — The Spec (⭐ structural decision, schema, API contracts, chunk map + boundary contracts), Part 2 — Technical Reference (stack, complete env list, integrations, security, performance, deploy topology), and Part 3 — Build Plan to v0 (session-by-session with done-checks, deploy checkpoints, resilience + functional-coverage audit gates, ship sequence). Two modes: greenfield / extends-existing. `blueprint/README.md` explains where it sits.
+- `.claude-plugin/marketplace.json` — the repo root is now a self-installing single-plugin marketplace. Install with `claude plugin marketplace add v60samurai/builder-os` + `claude plugin install builder-os@builder-os`, update with `claude plugin marketplace update builder-os` + `claude plugin update builder-os@builder-os`. README's install section documents both.
+
+### Changed
+- **ERD + Implementation Guide + Session Playbook merged into the Blueprint.** The three build docs became one so the build never reads from two docs that disagree.
+- **Skills renamed and rewired:** `erd-writer` → `blueprint-writer` (now also fills the technical reference + sequences the build sessions), `erd-gate` → `blueprint-gate` (now also checks env completeness, the security checklist, and that every session has a verifiable done-check), `session-runner` → `blueprint-runner` (drives the Blueprint's Part 3). `prd-*` and `brand-guide-visualizer` untouched.
+- `pro/MANIFESTO.md`, `pro/README.md`, `sessions/README.md`, `skills/README.md`, `examples/README.md`, and the root `README.md` updated to reference the Blueprint stage in place of the ERD + sessions split.
+
+### Archived
+- `erd/erd-template.md`, `sessions/IMPLEMENTATION_GUIDE.md`, and `sessions/SESSION_PLAYBOOK.md` moved to `archive/` (see `archive/README.md`). The `erd/` folder was retired; `sessions/` now holds only `FINAL_PUSH.md`, the go-to-market launch push.
+
+---
+
 ## [0.4.0] - 2026-07-07
 
 ### Added
