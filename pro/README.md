@@ -2,7 +2,7 @@
 
 > The full pipeline. If you just want to grab a template and ship, the [main README](../README.md) quickstart is still all you need — this is one layer down, for when you want the templates wired together instead of used as three separate folders.
 
-The base BuilderOS is templates: PRD, brand guide, session playbook, used independently. Pro is the operating layer connecting them — five modes, each with one artifact and one gate, so you can't accidentally start building before scope is locked, or ship without writing down what you learned.
+The base BuilderOS is templates: PRD, journeys, brand guide, Blueprint, used independently. Pro is the operating layer connecting them — five modes, each with one artifact and one gate, so you can't accidentally start building before scope is locked, or ship without writing down what you learned.
 
 Read [`MANIFESTO.md`](./MANIFESTO.md) first. Everything below just maps its five modes to files that already exist in this repo.
 
@@ -12,8 +12,8 @@ Read [`MANIFESTO.md`](./MANIFESTO.md) first. Everything below just maps its five
 |---|---|---|---|
 | **BRAINSTORM** | Generate options, no commitment | [`discovery/idea-log.md`](../discovery/idea-log.md) | — |
 | **DISCOVER** | Find the real problem, grade the evidence | [`discovery/discovery-brief.md`](../discovery/discovery-brief.md) | — |
-| **DEFINE** | Commit to what + why (PRD), then how (Blueprint); lock scope | [`prd/prd.md`](../prd/prd.md) → [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) | [`prd-writer`](../skills/prd-writer), [`prd-updater`](../skills/prd-updater), [`prd-gate`](../skills/prd-gate), [`blueprint-writer`](../skills/blueprint-writer), [`blueprint-gate`](../skills/blueprint-gate) |
-| **DELIVER** | Build to spec (against the Blueprint chunk map), ship | [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) Part 3, [`brand/`](../brand/) | [`skills/blueprint-runner`](../skills/blueprint-runner), [`skills/brand-guide-visualizer`](../skills/brand-guide-visualizer) |
+| **DEFINE** | Commit to what + why (PRD), map the flows, lock the look, then how (Blueprint) | [`prd/prd.md`](../prd/prd.md) → journeys.md → [`brand/`](../brand/) → prototype → design.md → [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) | [`prd-writer`](../skills/prd-writer), [`prd-updater`](../skills/prd-updater), [`prd-gate`](../skills/prd-gate), [`prd-journeys`](../skills/prd-journeys), [`brand-guide-visualizer`](../skills/brand-guide-visualizer), [`stitch-prompt`](../skills/stitch-prompt), [`blueprint-writer`](../skills/blueprint-writer), [`blueprint-gate`](../skills/blueprint-gate) |
+| **DELIVER** | Build to spec (against the Blueprint chunk map), ship | [`blueprint/blueprint-template.md`](../blueprint/blueprint-template.md) Part 3 | [`skills/blueprint-runner`](../skills/blueprint-runner) |
 | **LEARN** | Measure against the North Star, extract the lesson | [`postmortem/postmortem-template.md`](../postmortem/postmortem-template.md) | — |
 
 Move down the table in order. The manifesto's tripwires are what stop you from skipping a row under deadline pressure — read those before you decide a row doesn't apply to you this time.

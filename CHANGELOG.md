@@ -4,6 +4,20 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-08-13
+
+### Added
+- `skills/prd-journeys/` — folded the PRD→journeys skill into the plugin so the flow is self-contained. Reads `prd/prd.md`, interviews on gaps, writes `journeys.md`: a Mermaid flow per journey, a user-story traceability table, and a screen inventory with per-screen state matrix. The screen inventory feeds the prototype, the design step, and the Blueprint's frontend + chunk map.
+- `skills/stitch-prompt/` — the design step. Turns the brand guide + `journeys.md` screen inventory + the claude.ai JSX prototype into a ready-to-paste **Google Stitch** prompt (global design-system block + per-screen prompts). You iterate in Stitch and bring the result back into Claude Code via the Stitch MCP as `design.md`, which the Blueprint's frontend + token sections read.
+
+### Changed
+- **README rewritten around the full flow:** `discovery → PRD → journeys → brand → prototype (claude.ai JSX artifact) → design (Google Stitch) → Blueprint → ship`. New "The flow" section maps each step to the artifact it produces and the skill/tool that drives it, including `journeys.md` and `design.md`. The install command table now lists all nine skills by flow step; Quickstart walks the seven build steps in order.
+- `pro/README.md` — DEFINE stage now spans PRD → journeys → brand → prototype → design → Blueprint, wiring in `prd-journeys` and `stitch-prompt`.
+- Plugin + marketplace descriptions updated to the full pipeline. `journeys.md` and `design.md` are generated per-project (next to the PRD), not templates shipped in the repo.
+- Bump 0.5.0 → 0.6.0.
+
+---
+
 ## [0.5.0] - 2026-08-13
 
 ### Added
