@@ -4,6 +4,17 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.7.0] - 2026-08-13
+
+### Changed
+- **Design step moved to right after journeys.** The pipeline is now `discovery → PRD → journeys → design → brand → prototype → Blueprint → ship` (was `journeys → brand → prototype → design`). Design leads on the visual direction straight off the journeys' screen inventory; the brand guide then formalises the look the design settled on, and the prototype builds those screens with real fixtures.
+- **`stitch-prompt` now runs on journeys alone (plus the PRD), not brand + prototype.** With brand and prototype downstream of design, the Stitch prompt's global design-system block is a first design decision derived from the PRD's positioning and mood, and per-screen prompts come from the journeys' screen inventory. Inputs dropped from four to two.
+- Reordered every flow reference to match: root `README.md` (tagline, diagram, step table, spine, Quickstart, install table, Mermaid), `pro/README.md` DEFINE row, `skills/README.md` table, and the `prd-journeys` "where this sits" pointer.
+- Plugin + marketplace descriptions updated to the new order.
+- Bump 0.6.1 → 0.7.0.
+
+---
+
 ## [0.6.1] - 2026-08-13
 
 ### Added

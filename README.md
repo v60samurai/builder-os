@@ -6,7 +6,7 @@
 
 > An operating system for shipping products solo with AI.
 
-PRD → Journeys → Brand → Prototype → Design → Blueprint → ship. The pipeline I use to take a product from idea to live URL, working alone with Claude Code.
+PRD → Journeys → Design → Brand → Prototype → Blueprint → ship. The pipeline I use to take a product from idea to live URL, working alone with Claude Code.
 
 These templates have shipped real products. They are opinionated. They tell you what to do, not what you *could* do.
 
@@ -33,8 +33,8 @@ These templates have shipped real products. They are opinionated. They tell you 
 One pipeline, idea to live URL. Each step produces an artifact the next step reads — nothing is re-derived downstream. Gate before moving on.
 
 ```
-discovery ─▶ PRD ─▶ journeys ─▶ brand ─▶ prototype ─▶ design ─▶ Blueprint ─▶ ship
-  (if?)     (what)  (flows)    (look)    (feel)      (Stitch)   (how + build)
+discovery ─▶ PRD ─▶ journeys ─▶ design ─▶ brand ─▶ prototype ─▶ Blueprint ─▶ ship
+  (if?)     (what)  (flows)    (Stitch)  (look)   (feel)       (how + build)
 ```
 
 | # | Step | You produce | Skill / tool |
@@ -42,16 +42,16 @@ discovery ─▶ PRD ─▶ journeys ─▶ brand ─▶ prototype ─▶ design
 | 0 | **Discovery** *(optional)* | `discovery/idea-log.md` → `discovery-brief.md` — is it worth building? | — |
 | 1 | **PRD** | `prd/prd.md` — what + why, every load-bearing claim confidence-tagged | `/prd-writer`, `/prd-updater` · gate `/prd-gate` |
 | 2 | **Journeys** | `journeys.md` — personas, Mermaid flow per journey, screen inventory + state matrix | `/prd-journeys` |
-| 3 | **Brand** | `brand/quick-brand-guide.md` (or `full-`) — palette, type, voice, and the *why* behind each | fill it · render `/brand-guide-visualizer` |
-| 4 | **Prototype** | a claude.ai **JSX artifact** — clickable, with realistic mock fixtures | claude.ai Artifacts *(the fixtures become the Blueprint's schema source)* |
-| 5 | **Design** | `design.md` — the visual spec | `/stitch-prompt` → iterate in [Google Stitch](https://labs.google/stitch) → back into Claude Code via the Stitch MCP |
+| 3 | **Design** | `design.md` — the visual spec | `/stitch-prompt` → iterate in [Google Stitch](https://labs.google/stitch) → back into Claude Code via the Stitch MCP |
+| 4 | **Brand** | `brand/quick-brand-guide.md` (or `full-`) — palette, type, voice, and the *why* behind each | fill it · render `/brand-guide-visualizer` |
+| 5 | **Prototype** | a claude.ai **JSX artifact** — clickable, with realistic mock fixtures | claude.ai Artifacts *(the fixtures become the Blueprint's schema source)* |
 | 6 | **Blueprint** | `blueprint/blueprint-template.md` — spec + technical reference + step-by-step build plan | `/blueprint-writer` · gate `/blueprint-gate` |
 | 7 | **Implement** | the running app, to v0 | `/blueprint-runner` drives Part 3's build sessions |
 | 8 | **Postmortem** *(optional)* | `postmortem/postmortem-template.md` — results vs the PRD, one lesson as a rule | — |
 
-How the artifacts chain: journeys' **screen inventory** drives the prototype and the Stitch prompt; the prototype's **fixtures** drive the Blueprint's schema (greenfield mode); **design.md + journeys** drive the Blueprint's frontend change-list and chunk map. `journeys.md` and `design.md` are generated per-project next to your PRD — not templates in this repo.
+How the artifacts chain: journeys' **screen inventory** drives the Stitch design prompt and, later, the prototype; the prototype's **fixtures** drive the Blueprint's schema (greenfield mode); **design.md + journeys** drive the Blueprint's frontend change-list and chunk map. `journeys.md` and `design.md` are generated per-project next to your PRD — not templates in this repo.
 
-The spine: **discovery → PRD (what) → journeys → brand → prototype → design → Blueprint (how + build) → postmortem (learn)**, each gated before the next.
+The spine: **discovery → PRD (what) → journeys → design → brand → prototype → Blueprint (how + build) → postmortem (learn)**, each gated before the next.
 
 ---
 
@@ -68,9 +68,9 @@ Then:
 
 1. **PRD** — open `prd/prd.md`, fill every `[bracket]` placeholder (the Blueprint uses `{{double-brace}}` ones), tag claims 🟢🟡🔵🔴 honestly. Gate with `/prd-gate`.
 2. **Journeys** — `/prd-journeys` reads the PRD and writes `journeys.md`: a flow per journey plus a screen inventory the next steps build against.
-3. **Brand** — fill `brand/quick-brand-guide.md` (colors, type, voice, and *why*); render it with `/brand-guide-visualizer`.
-4. **Prototype** — build a clickable JSX artifact in claude.ai with realistic mock fixtures. This is where the real data shape gets discovered — the Blueprint derives its schema from it.
-5. **Design** — `/stitch-prompt` turns brand + journeys + prototype into a Google Stitch prompt; iterate in Stitch, bring the design back as `design.md` via the Stitch MCP.
+3. **Design** — `/stitch-prompt` turns journeys' screen inventory into a Google Stitch prompt; iterate in Stitch, bring the design back as `design.md` via the Stitch MCP.
+4. **Brand** — fill `brand/quick-brand-guide.md` (colors, type, voice, and *why*), locking in the look the design pass established; render it with `/brand-guide-visualizer`.
+5. **Prototype** — build a clickable JSX artifact in claude.ai with realistic mock fixtures. This is where the real data shape gets discovered — the Blueprint derives its schema from it.
 6. **Blueprint** — `/blueprint-writer` fills `blueprint/blueprint-template.md` (spec + technical reference + build plan). Pick a mode, name the ⭐ structural decision, derive the schema, cut the chunks, sequence the sessions. Gate with `/blueprint-gate` before any code.
 7. **Build** — `/blueprint-runner` drives Part 3's sessions in order, done-checks and checkpoints enforced.
 
@@ -97,8 +97,8 @@ claude plugin install builder-os@builder-os
 | `/prd-updater` | PRD | Integrate new information into an existing PRD without bolting on an "update note" |
 | `/prd-gate` | PRD | Check whether a PRD is actually ready — placeholders, confidence tags, non-goals, guardrail metric |
 | `/prd-journeys` | Journeys | Turn the PRD into `journeys.md` — flows per journey + a screen inventory with state matrix |
+| `/stitch-prompt` | Design | Turn journeys' screen inventory into a Google Stitch prompt; the design comes back as `design.md` via MCP |
 | `/brand-guide-visualizer` | Brand | Turn a filled-out brand guide into a single-file HTML reference |
-| `/stitch-prompt` | Design | Turn brand + journeys + prototype into a Google Stitch prompt; the design comes back as `design.md` via MCP |
 | `/blueprint-writer` | Blueprint | Write the Blueprint from a PRD — spec (schema, API, chunk map) + technical reference (env, integrations, security) + step-by-step build plan. Two modes: greenfield / extends-existing |
 | `/blueprint-gate` | Blueprint | Check the Blueprint is safe to build — ⭐ structural decision resolved, no load-bearing hypothesis, boundary contracts + env complete, every session verifiable |
 | `/blueprint-runner` | Implement | Drive the Blueprint's build sessions with done-checks and checkpoints enforced |
@@ -127,10 +127,10 @@ flowchart TD
     A["/prd-writer → prd.md"] --> B{"/prd-gate green?"}
     B -->|no, fix it| A
     B -->|yes| C["/prd-journeys → journeys.md"]
-    C --> D["fill brand guide → /brand-guide-visualizer"]
+    C --> F["/stitch-prompt → Stitch prompt; you iterate in Google Stitch → design.md via MCP"]
+    F --> D["fill brand guide → /brand-guide-visualizer"]
     D --> E["you: build a JSX prototype in claude.ai, with mock fixtures"]
-    E --> F["/stitch-prompt → Stitch prompt; you iterate in Google Stitch → design.md via MCP"]
-    F --> G["/blueprint-writer → blueprint.md"]
+    E --> G["/blueprint-writer → blueprint.md"]
     G --> H{"/blueprint-gate green?"}
     H -->|no, fix it| G
     H -->|yes| I["/blueprint-runner drives the build sessions to v0"]

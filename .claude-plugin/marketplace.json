@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "builder-os",
-  "description": "An operating system for shipping products solo with AI: PRD -> journeys -> brand -> prototype -> design -> Blueprint pipeline as enforced Claude Code skills.",
+  "description": "An operating system for shipping products solo with AI: PRD -> journeys -> design -> brand -> prototype -> Blueprint pipeline as enforced Claude Code skills.",
   "owner": {
     "name": "Harshit Badiger",
     "url": "https://github.com/v60samurai"
@@ -10,7 +10,7 @@
     {
       "name": "builder-os",
       "source": "./",
-      "description": "Claude Code skills for the Builder OS pipeline (PRD → journeys → brand → prototype → design → Blueprint → ship): write and gate PRDs against confidence-tag discipline, map user journeys, prompt Google Stitch for the visual design, write and gate the Blueprint (merged engineering spec + technical reference + step-by-step build plan) before code, drive the mode-aware build sessions with checkpoints enforced, and visualize brand guides.",
+      "description": "Claude Code skills for the Builder OS pipeline (PRD → journeys → design → brand → prototype → Blueprint → ship): write and gate PRDs against confidence-tag discipline, map user journeys, prompt Google Stitch for the visual design, write and gate the Blueprint (merged engineering spec + technical reference + step-by-step build plan) before code, drive the mode-aware build sessions with checkpoints enforced, and visualize brand guides.",
       "category": "productivity"
     }
   ]

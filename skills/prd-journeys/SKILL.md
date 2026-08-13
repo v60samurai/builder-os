@@ -7,7 +7,7 @@ description: Generate complete user journey/flow documentation from a locked Bui
 
 Turn a PRD into a complete user journey/flow doc: real end-to-end journeys (not per-story fragments), every edge case placed where its consumer will find it, and a screen inventory the downstream steps pick up.
 
-**Where this sits in the flow:** it's the step after the PRD and before the brand guide — `prd/prd.md` → **journeys.md** → brand → prototype → design → Blueprint. The screen inventory it produces is load-bearing downstream: the claude.ai JSX prototype builds those screens, the `stitch-prompt` step designs them, and the Blueprint's frontend change-list + chunk map (§7/§8) trace back to them. A missing or vague screen here surfaces as a hole three steps later.
+**Where this sits in the flow:** it's the step after the PRD and before the design step — `prd/prd.md` → **journeys.md** → design → brand → prototype → Blueprint. The screen inventory it produces is load-bearing downstream: the `stitch-prompt` step designs those screens, the claude.ai JSX prototype builds them, and the Blueprint's frontend change-list + chunk map (§7/§8) trace back to them. A missing or vague screen here surfaces as a hole three steps later.
 
 Interview-first: PRDs always have holes. A wrong guess about who the user is or what happens on failure poisons every downstream artifact, so resolve gaps with the user *before* drafting — never draft on silent assumptions.
 
@@ -96,7 +96,7 @@ Every PRD story appears here. No orphans.
 ## Screen Inventory
 
 One entry per screen the journeys imply. This is the handoff surface for the
-prototype + design steps and the Blueprint's frontend section — loose format, no rigid schema.
+design + prototype steps and the Blueprint's frontend section — loose format, no rigid schema.
 
 ### S1 — <Screen name>
 **Purpose:** one line. **Appears in:** J1, J3.

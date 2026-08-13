@@ -1,7 +1,7 @@
 {
   "name": "builder-os",
-  "version": "0.6.1",
-  "description": "Claude Code skills for the Builder OS pipeline (PRD → journeys → brand → prototype → design → Blueprint → ship): write and gate PRDs against Builder OS's confidence-tag discipline, map user journeys, prompt Google Stitch for the visual design, write and gate the Blueprint (merged engineering spec + technical reference + step-by-step build plan) before code, drive the mode-aware build sessions with checkpoints enforced, and visualize brand guides.",
+  "version": "0.7.0",
+  "description": "Claude Code skills for the Builder OS pipeline (PRD → journeys → design → brand → prototype → Blueprint → ship): write and gate PRDs against Builder OS's confidence-tag discipline, map user journeys, prompt Google Stitch for the visual design, write and gate the Blueprint (merged engineering spec + technical reference + step-by-step build plan) before code, drive the mode-aware build sessions with checkpoints enforced, and visualize brand guides.",
   "author": {
     "name": "Harshit Badiger",
     "url": "https://github.com/v60samurai"
