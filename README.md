@@ -116,6 +116,31 @@ Restart Claude Code (or start a new session) for the updated skills to load.
 
 ---
 
+## How to use it
+
+Once the plugin is installed, you run the pipeline by invoking the skills in order. Each one either writes a document or checks it. You make the product decisions inside those documents, and you own the two steps the skills cannot do for you: building the prototype in claude.ai and iterating the visual design in Google Stitch. Everything else is a command and a gate.
+
+The gates decide when you move on. A red gate is a stop, not a suggestion. `/prd-gate` holds until the PRD is real, and `/blueprint-gate` holds until the build is safe to start. When a gate fails, you fix the document it points at and run it again before continuing.
+
+```mermaid
+flowchart TD
+    A["/prd-writer → prd.md"] --> B{"/prd-gate green?"}
+    B -->|no, fix it| A
+    B -->|yes| C["/prd-journeys → journeys.md"]
+    C --> D["fill brand guide → /brand-guide-visualizer"]
+    D --> E["you: build a JSX prototype in claude.ai, with mock fixtures"]
+    E --> F["/stitch-prompt → Stitch prompt; you iterate in Google Stitch → design.md via MCP"]
+    F --> G["/blueprint-writer → blueprint.md"]
+    G --> H{"/blueprint-gate green?"}
+    H -->|no, fix it| G
+    H -->|yes| I["/blueprint-runner drives the build sessions to v0"]
+    I --> J["ship"]
+```
+
+Each document is the handoff to the next step, so you can stop after any of them and pick up later with the context intact. The one rule that holds the whole thing together: never start a step on a document the previous gate has not passed.
+
+---
+
 ## Philosophy
 
 Most templates are slop.

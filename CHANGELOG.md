@@ -4,6 +4,13 @@ All notable changes to Builder OS land here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/).
 
+## [0.6.1] - 2026-08-13
+
+### Added
+- README "How to use it" section: a Mermaid diagram of the operational flow (which slash command to run, where the two gates loop, and the two steps you drive by hand — the claude.ai prototype and the Google Stitch design), plus the rule that you never start a step on a document the previous gate has not passed.
+
+---
+
 ## [0.6.0] - 2026-08-13
 
 ### Added
